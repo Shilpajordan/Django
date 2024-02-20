@@ -19,19 +19,23 @@ monthly_challenges = {
 
 # Create your views here.
 
-# def january(request):
-#     return HttpResponse("Eat vegan!")
+def index(request):
+    list_items = ""
+    months = list(monthly_challenges.keys())
 
-# def february(request):
-#     return HttpResponse("Walk for at least 20 minutes every day")
+    for month in months:
+        capitalized_month = month.capitalize()
+        month_path = reverse("month-challenge", args=[month])
+        list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
 
-# def march(request):
-#     return HttpResponse("Learn Django for at least 20 minutes every day ")
+    response_data = f"<ul>{list_items}</ul"
+    return HttpResponse(response_data)
+
 def my_page_challenge_by_number(request, month):
     months = list(monthly_challenges.keys()) # returns a list of keys
 
     if month > len(months):
-        return HttpResponseNotFound("Invalid error")
+        return HttpResponseNotFound("Invalid month")
 
     redirect_month = months[month - 1]
     redirect_path = reverse("month-challenge", args=[redirect_month]) # /challenge/january (dynamic path)
@@ -40,7 +44,8 @@ def my_page_challenge_by_number(request, month):
 def my_page(request, month): # adding the dynamic url parameter here
     try:
         challenge_text = monthly_challenges[month]
-        return HttpResponse(challenge_text)
+        response_data = f"<h1>{challenge_text}<h1>"
+        return HttpResponse(response_data)
     except :
-        return HttpResponseNotFound("This month is not supported!")
+        return HttpResponseNotFound("<h1>This month is not supported!<h1>")
     
