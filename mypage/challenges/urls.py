@@ -7,5 +7,5 @@ urlpatterns = [
     #path("february", views.february),
     #path("march", views.march),
     path("<int:month>", views.my_page_challenge_by_number),
-    path("<str:month>", views.my_page), # dynamic path placeholder <month>
+    path("<str:month>", views.my_page, name="month-challenge"), # dynamic path placeholder <month>
 ]

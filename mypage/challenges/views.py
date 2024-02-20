@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 
 monthly_challenges = {
     "january": "Eat vegan!",
@@ -33,7 +34,8 @@ def my_page_challenge_by_number(request, month):
         return HttpResponseNotFound("Invalid error")
 
     redirect_month = months[month - 1]
-    return HttpResponseRedirect("/challenges" + redirect_month)
+    redirect_path = reverse("month-challenge", args=[redirect_month]) # /challenge/january (dynamic path)
+    return HttpResponseRedirect(redirect_path)
 
 def my_page(request, month): # adding the dynamic url parameter here
     try:
