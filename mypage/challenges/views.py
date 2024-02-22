@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
-from django.template.loader import render_to_string
+#from django.template.loader import render_to_string
 
 monthly_challenges = {
     "january": "Eat vegan!",
@@ -45,8 +45,10 @@ def my_page_challenge_by_number(request, month):
 def my_page(request, month): # adding the dynamic url parameter here
     try:
         challenge_text = monthly_challenges[month]
-        response_data = render_to_string("challenges/challenge.html")
-        return HttpResponse(response_data)
+        return render(request,"challenges/challenge.html",{
+            "text": challenge_text,
+            "month_name": month # month.capitalize()
+        })
     except :
         return HttpResponseNotFound("<h1>This month is not supported!<h1>")
     
