@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 #from django.template.loader import render_to_string
 
@@ -53,5 +53,5 @@ def my_page(request, month): # adding the dynamic url parameter here
             "month_name": month # month.capitalize()
         })
     except :
-        return HttpResponseNotFound("<h1>This month is not supported!<h1>")
+        raise Http404()
     
